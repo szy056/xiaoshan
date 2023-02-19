@@ -1,0 +1,14 @@
+docker run -d \
+  --name=jellyfin \
+  -e PUID=1001\
+  -e PGID=1001\
+  -e TZ=Europe/London \
+  -p 8096:8096 \
+  -v /mnt/sdd/100g/n3/jellyfin/config:/config \
+  -v /mnt/nas1/x4t/n1movie:/data/movies \
+  --restart unless-stopped \
+  --device=/dev/dri:/dev/dri\
+  lscr.io/linuxserver/jellyfin:latest
+
+mkdir -p /srv/jellyfin/{config,cache}
+docker run -d -v /mnt/sdd/100g/n3/jellyfin/config:/config -v /mnt/sdd/100g/n3/jellyfin/cache:/cache -v /mnt/nas1/x4t/n1movie:/media -v /mnt/nas2/4t/n2crmovie:/media2 -v /media1:/media1 --net=host --device=/dev/dri:/dev/dri --restart=always --name jellyfin  nyanmisaka/jellyfin:latest
